@@ -12,6 +12,7 @@ BEGIN {
     unshift @INC, qq{$topdir/lib};
 }
 use Test::More tests => 94;
+printf STDERR "\$Test::More::VERSION: %.9f\n" => ($Test::More::VERSION);
 use Carp;
 use Parrot::Configure::Options qw| process_options |;
 use Parrot::Configure::Options::Conf::CLI ();
