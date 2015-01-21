@@ -20,6 +20,9 @@
           Harmonized the cpu config keys, no $platform_has_$feature keys anymore, just
           HAS_$PLATFORM_$feature. #1173
         + Improved msvc configuration from a mingw perl. #1191
+    - Documentation
+    - Tests
+    - Community
 
 2014-01-23    release 7.0.1 - supported
     - Core
