@@ -230,10 +230,9 @@ INTVAL Parrot_io_close_handle(PARROT_INTERP, ARGMOD(PMC *pmc))
 
 PARROT_EXPORT
 PARROT_WARN_UNUSED_RESULT
-INTVAL Parrot_io_eof(PARROT_INTERP, ARGMOD(PMC *handle))
+INTVAL Parrot_io_eof(PARROT_INTERP, ARGIN(const PMC * const handle))
         __attribute__nonnull__(1)
-        __attribute__nonnull__(2)
-        FUNC_MODIFIES(*handle);
+        __attribute__nonnull__(2);
 
 PARROT_EXPORT
 PARROT_IGNORABLE_RESULT
@@ -287,14 +286,13 @@ PARROT_EXPORT
 PARROT_IGNORABLE_RESULT
 INTVAL /*@alt void@*/
 Parrot_io_fprintf(PARROT_INTERP,
-    ARGMOD(PMC *pmc),
+    ARGIN(const PMC * const pmc),
     ARGIN_FORMAT(const char *s),
     ...)
         __attribute__nonnull__(1)
         __attribute__nonnull__(2)
         __attribute__format__(3, 4)
-        __attribute__nonnull__(3)
-        FUNC_MODIFIES(*pmc);
+        __attribute__nonnull__(3);
 
 PARROT_EXPORT
 PARROT_WARN_UNUSED_RESULT
@@ -395,7 +393,7 @@ PARROT_EXPORT
 PARROT_IGNORABLE_RESULT
 INTVAL /*@alt void@*/
 Parrot_io_pprintf(PARROT_INTERP,
-    PIOHANDLE os_handle,
+    const PIOHANDLE os_handle,
     ARGIN_FORMAT(const char *s),
     ...)
         __attribute__nonnull__(1)
@@ -414,20 +412,21 @@ Parrot_io_printf(PARROT_INTERP,
 
 PARROT_EXPORT
 PARROT_DEPRECATED
-INTVAL Parrot_io_putps(PARROT_INTERP, ARGMOD(PMC *pmc), ARGMOD(STRING *s))
+INTVAL Parrot_io_putps(PARROT_INTERP,
+    ARGIN(const PMC * const pmc),
+    ARGIN(const STRING * const s))
         __attribute__nonnull__(1)
         __attribute__nonnull__(2)
-        __attribute__nonnull__(3)
-        FUNC_MODIFIES(*pmc)
-        FUNC_MODIFIES(*s);
+        __attribute__nonnull__(3);
 
 PARROT_EXPORT
 PARROT_DEPRECATED
-INTVAL Parrot_io_puts(PARROT_INTERP, ARGMOD(PMC *pmc), ARGIN(const char *s))
+INTVAL Parrot_io_puts(PARROT_INTERP,
+    ARGIN(const PMC * const pmc),
+    ARGIN(const char *s))
         __attribute__nonnull__(1)
         __attribute__nonnull__(2)
-        __attribute__nonnull__(3)
-        FUNC_MODIFIES(*pmc);
+        __attribute__nonnull__(3);
 
 PARROT_EXPORT
 PARROT_CANNOT_RETURN_NULL

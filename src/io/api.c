@@ -1231,7 +1231,7 @@ Parrot_io_peek(PARROT_INTERP, ARGMOD(PMC *handle))
 
 /*
 
-=item C<INTVAL Parrot_io_eof(PARROT_INTERP, PMC *handle)>
+=item C<INTVAL Parrot_io_eof(PARROT_INTERP, const PMC * const handle)>
 
 Returns C<1> if the C<handle> is at end-of-file (or the type-specific
 equivalent). Returns C<1> if the handle is null, closed, or otherwise not
@@ -1247,7 +1247,7 @@ handle is not considered to be at EOF.
 PARROT_EXPORT
 PARROT_WARN_UNUSED_RESULT
 INTVAL
-Parrot_io_eof(PARROT_INTERP, ARGMOD(PMC *handle))
+Parrot_io_eof(PARROT_INTERP, ARGIN(const PMC * const handle))
 {
     ASSERT_ARGS(Parrot_io_eof)
     /* io could be null here, but rather than return a negative error
@@ -1268,7 +1268,8 @@ Parrot_io_eof(PARROT_INTERP, ARGMOD(PMC *handle))
 
 /*
 
-=item C<INTVAL Parrot_io_puts(PARROT_INTERP, PMC *pmc, const char *s)>
+=item C<INTVAL Parrot_io_puts(PARROT_INTERP, const PMC * const pmc, const char
+*s)>
 
 Legacy wrapper for C<Parrot_io_write_b>. Deprecated. Do not use
 
@@ -1279,7 +1280,7 @@ Legacy wrapper for C<Parrot_io_write_b>. Deprecated. Do not use
 PARROT_EXPORT
 PARROT_DEPRECATED
 INTVAL
-Parrot_io_puts(PARROT_INTERP, ARGMOD(PMC *pmc), ARGIN(const char *s))
+Parrot_io_puts(PARROT_INTERP, ARGIN(const PMC * const pmc), ARGIN(const char *s))
 {
     ASSERT_ARGS(Parrot_io_puts)
     return Parrot_io_write_b(interp, pmc, s, strlen(s));
@@ -1287,7 +1288,8 @@ Parrot_io_puts(PARROT_INTERP, ARGMOD(PMC *pmc), ARGIN(const char *s))
 
 /*
 
-=item C<INTVAL Parrot_io_putps(PARROT_INTERP, PMC *pmc, STRING *s)>
+=item C<INTVAL Parrot_io_putps(PARROT_INTERP, const PMC * const pmc, const
+STRING * const s)>
 
 Legacy Wrapper for C<Parrot_io_write_s>. Deprecated. Do not use.
 
@@ -1298,7 +1300,7 @@ Legacy Wrapper for C<Parrot_io_write_s>. Deprecated. Do not use.
 PARROT_EXPORT
 PARROT_DEPRECATED
 INTVAL
-Parrot_io_putps(PARROT_INTERP, ARGMOD(PMC *pmc), ARGMOD(STRING *s))
+Parrot_io_putps(PARROT_INTERP, ARGIN(const PMC * const pmc), ARGIN(const STRING * const s))
 {
     ASSERT_ARGS(Parrot_io_putps)
     return Parrot_io_write_s(interp, pmc, s);
@@ -1306,8 +1308,8 @@ Parrot_io_putps(PARROT_INTERP, ARGMOD(PMC *pmc), ARGMOD(STRING *s))
 
 /*
 
-=item C<INTVAL Parrot_io_fprintf(PARROT_INTERP, PMC *pmc, ARGIN_FORMAT(const
-char *s), ...)>
+=item C<INTVAL Parrot_io_fprintf(PARROT_INTERP, const PMC * const pmc,
+ARGIN_FORMAT(const char *s), ...)>
 
 Writes a C string format with varargs to C<*pmc>. Uses C<Parrot_io_write_s> to
 write the formatted string, and is subject to all the limitations thereof.
@@ -1319,19 +1321,17 @@ write the formatted string, and is subject to all the limitations thereof.
 PARROT_EXPORT
 PARROT_IGNORABLE_RESULT
 INTVAL
-Parrot_io_fprintf(PARROT_INTERP, ARGMOD(PMC *pmc), ARGIN_FORMAT(const char *s), ...)
+Parrot_io_fprintf(PARROT_INTERP, ARGIN(const PMC * const pmc), ARGIN_FORMAT(const char *s), ...)
 {
     ASSERT_ARGS(Parrot_io_fprintf)
     va_list args;
     INTVAL ret;
 
     va_start(args, s);
-
     {
         STRING * const str = Parrot_vsprintf_c(interp, s, args);
         ret = Parrot_io_write_s(interp, pmc, str);
     }
-
     va_end(args);
 
     return ret;
@@ -1339,7 +1339,7 @@ Parrot_io_fprintf(PARROT_INTERP, ARGMOD(PMC *pmc), ARGIN_FORMAT(const char *s), 
 
 /*
 
-=item C<INTVAL Parrot_io_pprintf(PARROT_INTERP, PIOHANDLE os_handle,
+=item C<INTVAL Parrot_io_pprintf(PARROT_INTERP, const PIOHANDLE os_handle,
 ARGIN_FORMAT(const char *s), ...)>
 
 Writes a C string format with varargs to PIOHANDLE C<os_handle>. Writes
@@ -1353,7 +1353,7 @@ logic common to Parrot Handle PMCs.
 PARROT_EXPORT
 PARROT_IGNORABLE_RESULT
 INTVAL
-Parrot_io_pprintf(PARROT_INTERP, PIOHANDLE os_handle, ARGIN_FORMAT(const char *s), ...)
+Parrot_io_pprintf(PARROT_INTERP, const PIOHANDLE os_handle, ARGIN_FORMAT(const char *s), ...)
 {
     ASSERT_ARGS(Parrot_io_pprintf)
     va_list  args;
