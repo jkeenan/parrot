@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2001-2011, Parrot Foundation.
+Copyright (C) 2001-2015, Parrot Foundation.
 
 =head1 NAME
 
@@ -440,7 +440,7 @@ trace_mem_block(PARROT_INTERP,
 {
     ASSERT_ARGS(trace_mem_block)
     size_t    prefix;
-    ptrdiff_t cur_var_ptr;
+    size_t   *cur_var_ptr;
 
     const size_t buffer_min = get_min_buffer_address(interp, mem_pools);
     const size_t buffer_max = get_max_buffer_address(interp, mem_pools);
@@ -467,10 +467,10 @@ trace_mem_block(PARROT_INTERP,
                 ? mask & buffer_min
                 : 0;
 
-    for (cur_var_ptr = lo_var_ptr; cur_var_ptr < (ptrdiff_t)hi_var_ptr; cur_var_ptr++) {
+    for (cur_var_ptr = (size_t *)lo_var_ptr; (size_t)cur_var_ptr < hi_var_ptr; cur_var_ptr++) {
 
         /* XXX yes, ptr may be uninitialized here. valgrind and asan complains. */
-        const size_t ptr = *(size_t *)cur_var_ptr;
+        const size_t ptr = *cur_var_ptr;
         if (!ptr)
             continue;
 
