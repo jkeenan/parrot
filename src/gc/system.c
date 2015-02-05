@@ -425,8 +425,8 @@ find_common_mask(PARROT_INTERP, size_t val1, size_t val2)
 
 Traces the memory block between C<lo_var_ptr> and C<hi_var_ptr>.
 Attempt to find pointers to PObjs or buffers, and mark them as "alive"
-if found. See src/cpu_dep.c for more information about tracing memory
-areas.
+if found. See C<trace_system_areas()> for more information about tracing
+memory areas.
 
 =cut
 
